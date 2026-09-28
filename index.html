@@ -41,7 +41,7 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;">
         
         <!-- Используем ТВОЙ кастомный маркер -->
-        <a-marker preset="hiro">
+        <a-marker type="pattern" url="marker.patt">
             
             <!-- 1. Светящееся основание (Тор) -->
             <a-torus radius="0.6" radius-tubular="0.02" color="#00ffcc" opacity="0.7" 
