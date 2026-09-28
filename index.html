@@ -2,17 +2,83 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Лабораторная работа №4 - AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Лабораторная работа №4 - AR МГТУ СТАНКИН</title>
+    
+    <!-- Подключаем библиотеки A-Frame и AR.js -->
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <style>body { margin: 0; overflow: hidden; }</style>
+    
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .info-panel {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 20, 40, 0.85);
+            color: #00ffcc;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #00ffcc;
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+        .info-panel h2 { margin: 0 0 10px 0; font-size: 18px; color: #fff; }
+        .info-panel p { margin: 5px 0; color: #ccc; }
+    </style>
 </head>
 <body>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <a-marker preset="hiro">
-            <a-box position="0 0.5 0" material="color: blue;"></a-box>
-            <a-text value="МГТУ СТАНКИН" position="0 1.2 0" align="center" color="white" scale="2 2 2"></a-text>
+    <!-- Информационная панель для отчета и пользователя -->
+    <div class="info-panel">
+        <h2>МГТУ «СТАНКИН»</h2>
+        <p>Лабораторная работа №4</p>
+        <p>Технологии дополненной реальности</p>
+        <p><i>Наведите камеру на ваш маркер</i></p>
+    </div>
+
+    <!-- Сцена дополненной реальности -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;">
+        
+        <!-- Используем ТВОЙ кастомный маркер -->
+        <a-marker type="pattern" url="marker.patt">
+            
+            <!-- 1. Светящееся основание (Тор) -->
+            <a-torus radius="0.6" radius-tubular="0.02" color="#00ffcc" opacity="0.7" 
+                     animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+            </a-torus>
+
+            <!-- 2. Второе кольцо, вращающееся в другую сторону -->
+            <a-torus radius="0.8" radius-tubular="0.01" color="#ff00ff" opacity="0.5" rotation="90 0 0"
+                     animation="property: rotation; to: 90 360 0; loop: true; dur: 12000; easing: linear">
+            </a-torus>
+
+            <!-- 3. Центральный голографический элемент (Икосаэдр с каркасом) -->
+            <a-icosahedron radius="0.4" color="#00ffcc" wireframe="true" opacity="0.9"
+                           animation="property: rotation; to: 360 360 360; loop: true; dur: 6000; easing: linear">
+            </a-icosahedron>
+
+            <!-- 4. Внутреннее светящееся ядро -->
+            <a-sphere radius="0.15" color="#ffffff" shader="flat"
+                      animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; loop: true; dur: 1000; easing: easeInOutSine">
+            </a-sphere>
+
+            <!-- 5. Парящий анимированный текст -->
+            <a-text value="МГТУ СТАНКИН\nКафедра ИС\nЛабораторная №4" 
+                    align="center" 
+                    color="#00ffcc" 
+                    position="0 1.2 0" 
+                    scale="2.5 2.5 2.5"
+                    animation="property: position; to: 0 1.4 0; dir: alternate; loop: true; dur: 2500; easing: easeInOutSine">
+            </a-text>
+
+            <!-- 6. Дополнительное освещение для красоты -->
+            <a-light type="point" color="#00ffcc" intensity="2" position="0 2 0"></a-light>
+            <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
+
         </a-marker>
+
+        <!-- Камера -->
         <a-entity camera></a-entity>
     </a-scene>
 </body>
